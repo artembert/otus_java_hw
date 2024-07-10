@@ -1,6 +1,6 @@
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
-import org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
+import org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
 
 plugins {
     idea
@@ -20,7 +20,7 @@ idea {
 
 
 allprojects {
-    group = "ru.otus"
+    group = "com.artembert"
 
     repositories {
         mavenLocal()
