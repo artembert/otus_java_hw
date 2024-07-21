@@ -1,19 +1,19 @@
 package homework;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class CustomerTest {
 
     // Все тесты должны проходить, менять тесты не надо.
 
     @Test
-    @DisplayName("Проверяем, что класс Customer не сломан")
+    @DisplayName("Make sure the Customer class has basic functionality")
     void setterCustomerTest() {
         // given
         String expectedName = "updatedName";
@@ -28,7 +28,6 @@ class CustomerTest {
     }
 
     @Test
-    @Disabled("надо удалить") // надо удалить
     @DisplayName("Объект Customer как ключ в карте")
     void customerAsKeyTest() {
         // given
@@ -56,7 +55,25 @@ class CustomerTest {
     }
 
     @Test
-    @Disabled("надо удалить") // надо удалить
+    @DisplayName("Return the smallest element by field 'score'")
+    void getSmallestTest() {
+        // given
+        Customer customer1 = new Customer(1, "John", 233);
+        Customer customer2 = new Customer(2, "Doe", 11);
+        Customer customer3 = new Customer(3, "Simon", 888);
+
+        CustomerService customerService = new CustomerService();
+        customerService.add(customer1, "Data1");
+        customerService.add(customer2, "Data2");
+        customerService.add(customer3, "Data3");
+
+        // when
+        Map.Entry<Customer, String> smallestScore = customerService.getSmallest();
+        // then
+        assertThat(smallestScore.getKey()).isEqualTo(customer2);
+    }
+
+    @Test
     @DisplayName("Сортировка по полю score, итерация по возрастанию")
     void scoreSortingTest() {
         // given
@@ -96,7 +113,6 @@ class CustomerTest {
     }
 
     @Test
-    @Disabled("надо удалить") // надо удалить
     @DisplayName("Модификация коллекции")
     void mutationTest() {
         // given
@@ -118,7 +134,6 @@ class CustomerTest {
     }
 
     @Test
-    @Disabled("надо удалить") // надо удалить
     @DisplayName("Возвращание в обратном порядке")
     void reverseOrderTest() {
         // given
