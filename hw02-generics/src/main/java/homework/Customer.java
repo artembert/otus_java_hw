@@ -1,8 +1,5 @@
 package homework;
 
-import java.util.Objects;
-
-@SuppressWarnings({"java:S1135"}) // при выполнении ДЗ эту аннотацию надо удалить
 public class Customer {
     private final long id;
     private String name;
@@ -14,6 +11,12 @@ public class Customer {
         this.id = id;
         this.name = name;
         this.scores = scores;
+    }
+
+    public Customer(Customer instance) {
+        this.id = instance.getId();
+        this.name = instance.getName();
+        this.scores = instance.getScores();
     }
 
     public long getId() {
