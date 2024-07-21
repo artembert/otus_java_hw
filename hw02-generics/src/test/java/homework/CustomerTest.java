@@ -9,9 +9,6 @@ import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class CustomerTest {
-
-    // Все тесты должны проходить, менять тесты не надо.
-
     @Test
     @DisplayName("Make sure the Customer class has a basic functionality")
     void setterCustomerTest() {
@@ -74,7 +71,7 @@ class CustomerTest {
     }
 
     @Test
-    @DisplayName("Сортировка по полю score, итерация по возрастанию")
+    @DisplayName("Sort by the score field, iterate in ascending order")
     void scoreSortingTest() {
         // given
         Customer customer1 = new Customer(1, "Ivan", 233);
@@ -92,7 +89,7 @@ class CustomerTest {
         assertThat(smallestScore.getKey()).isEqualTo(customer2);
 
         // when
-        // подсказка:
+        // hinted:
         // a key-value mapping associated with the least key strictly greater than the given key, or
         // null if there is no such key.
         Map.Entry<Customer, String> middleScore = customerService.getNext(new Customer(10, "Key", 20));
@@ -113,7 +110,7 @@ class CustomerTest {
     }
 
     @Test
-    @DisplayName("Модификация коллекции")
+    @DisplayName("Mutate a collection")
     void mutationTest() {
         // given
         Customer customer1 = new Customer(1, "Ivan", 233);
@@ -134,7 +131,7 @@ class CustomerTest {
     }
 
     @Test
-    @DisplayName("Возвращание в обратном порядке")
+    @DisplayName("Return in reverse order")
     void reverseOrderTest() {
         // given
         Customer customer1 = new Customer(1, "Ivan", 233);

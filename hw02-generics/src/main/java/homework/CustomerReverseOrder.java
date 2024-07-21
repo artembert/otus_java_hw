@@ -1,14 +1,17 @@
 package homework;
 
-@SuppressWarnings({"java:S1186", "java:S1135", "java:S1172"}) // при выполнении ДЗ эту аннотацию надо удалить
-public class CustomerReverseOrder {
+import java.util.LinkedList;
 
-    // todo: 2. надо реализовать методы этого класса
+public class CustomerReverseOrder {
+    private final LinkedList<Customer> collection = new LinkedList<>();
+
     // надо подобрать подходящую структуру данных, тогда решение будет в "две строчки"
 
-    public void add(Customer customer) {}
+    public void add(Customer customer) {
+        this.collection.addFirst(customer);
+    }
 
     public Customer take() {
-        return null; // это "заглушка, чтобы скомилировать"
+        return this.collection.pollFirst();
     }
 }
