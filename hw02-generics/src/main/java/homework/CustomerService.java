@@ -26,7 +26,7 @@ public class CustomerService {
     }
 
     private Map.Entry<Customer, String> buildNewEntity(Customer customer, String data) {
-        return new Map.Entry<Customer, String>() {
+        return new Map.Entry<>() {
             @Override
             public Customer getKey() {
                 return new Customer(customer);
