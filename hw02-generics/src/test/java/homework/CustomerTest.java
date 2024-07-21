@@ -13,7 +13,7 @@ class CustomerTest {
     // Все тесты должны проходить, менять тесты не надо.
 
     @Test
-    @DisplayName("Make sure the Customer class has basic functionality")
+    @DisplayName("Make sure the Customer class has a basic functionality")
     void setterCustomerTest() {
         // given
         String expectedName = "updatedName";
@@ -28,7 +28,7 @@ class CustomerTest {
     }
 
     @Test
-    @DisplayName("Объект Customer как ключ в карте")
+    @DisplayName("Store customers in a map by id")
     void customerAsKeyTest() {
         // given
         final long customerId = 1L;
