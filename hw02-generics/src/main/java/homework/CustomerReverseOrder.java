@@ -1,15 +1,16 @@
 package homework;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class CustomerReverseOrder {
-    private final LinkedList<Customer> collection = new LinkedList<>();
+    private final Deque<Customer> collection = new ArrayDeque<>();
 
     public void add(Customer customer) {
         this.collection.addFirst(customer);
     }
 
     public Customer take() {
-        return this.collection.pollFirst();
+        return this.collection.pop();
     }
 }
