@@ -29,7 +29,6 @@ public class ReflectionHelper {
             field.setAccessible(true);
             field.set(object, value);
         } catch (Exception e) {
-            logger.error("Exception occurred while calling method '{}': {}", name, e, e);
             throw new RuntimeException(e);
         }
     }
@@ -40,6 +39,7 @@ public class ReflectionHelper {
             method.setAccessible(true);
             return method.invoke(object, args);
         } catch (Exception e) {
+            logger.error("Exception occurred while calling method '{}': {}", name, e, e);
             throw new RuntimeException(e);
         }
     }

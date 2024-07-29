@@ -20,12 +20,7 @@ public class SuccessfulTest {
     }
 
     @Test
-    public void reversedOperationTest() {
-        int square = globalVariable * globalVariable;
-        double newValue = Math.sqrt(square);
-        double actualValue = 5;
-        System.out.println("Expected value: " + newValue);
-        System.out.println("Actual value: " + actualValue);
-        assertEquals(newValue, actualValue, 0.01);
+    public void simpleSumConstantTest() {
+        assertEquals(2, 1 + 1);
     }
 }
