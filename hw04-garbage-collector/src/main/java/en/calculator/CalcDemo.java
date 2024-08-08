@@ -18,7 +18,7 @@ public class CalcDemo {
     private static final Logger log = LoggerFactory.getLogger(CalcDemo.class);
 
     public static void main(String[] args) {
-        long counter = 500_000_000;
+        long counter = 2_000_000_000;
         var summator = new Summator();
         long startTime = System.currentTimeMillis();
 
