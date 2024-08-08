@@ -8,5 +8,6 @@
 | 1024m     | Original  | 13352     | 13       |
 | 2048m     | Original  | 14453     | 14       |
 | 4096m     | Original  | 37604     | 37       |
+| 8192m     | Original  | 36960     | 36       |
 | 256m      | Changes 1 | time2     | time2s   |
 | 512m      | Changes 1 | time4     | time4s   |
