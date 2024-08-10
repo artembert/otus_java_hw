@@ -34,6 +34,10 @@
 | 128m      | 2. Data: Integer to int     | 12430     | 12       |
 | 512m      | 2. Data: Integer to int     | 12326     | 12       |
 | 8192m     | 2. Data: Integer to int     | 19992     | 19       |
+| 64m       | 3. List to int              | 7568      | 7        |
+| 128m      | 3. List to int              | 7498      | 7        |
+| 512m      | 3. List to int              | 7463      | 7        |
+| 8192m     | 3. List to int              | 7522      | 7        |
 
 ## Changes
 
@@ -44,3 +48,20 @@ Replace Integer with int
 ### 2. Data: Integer to int
 
 Replace Integer with int
+
+### 3. List to int
+
+Replace List 'listValues' with int 'counter'
+
+## Summary
+
+- The usage of optimized data types (int instead of Integer) has a significant impact on the performance of the garbage
+  collector. I.e. the Garbage Collector have not been called at all in the case of the 2_000_000_000 counter.
+
+```text
+[gc] Using G1
+[gc] ConcGCThreads: 3 offset 22
+[gc] ParallelGCThreads: 10
+[gc] Initialize mark stack with 4096 chunks, maximum 524288
+
+```

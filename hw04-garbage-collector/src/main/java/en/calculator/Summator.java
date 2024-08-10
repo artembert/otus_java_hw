@@ -1,10 +1,7 @@
 package en.calculator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Summator {
-    private final List<Data> listValues = new ArrayList<>();
+    private int counter = 0;
     private int sum = 0;
     private int prevValue = 0;
     private int prevPrevValue = 0;
@@ -13,9 +10,9 @@ public class Summator {
 
     // !!! сигнатуру метода менять нельзя
     public void calc(Data data) {
-        listValues.add(data);
-        if (listValues.size() % 100_000 == 0) {
-            listValues.clear();
+        counter++;
+        if (counter % 100_000 == 0) {
+            counter = 0;
         }
         sum += data.getValue();
 
@@ -26,7 +23,7 @@ public class Summator {
 
         for (var idx = 0; idx < 3; idx++) {
             someValue += (sumLastThreeValues * sumLastThreeValues / (data.getValue() + 1) - sum);
-            someValue = Math.abs(someValue) + listValues.size();
+            someValue = Math.abs(someValue) + counter;
         }
     }
 
