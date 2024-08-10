@@ -14,27 +14,27 @@ public class Ioc {
     private Ioc() {
     }
 
-    static MyClassInterface createMyClass() {
-        InvocationHandler handler = new LoggerInvocationHandler(new MyClassImpl());
-        return (MyClassInterface) Proxy.newProxyInstance(Ioc.class.getClassLoader(), new Class<?>[]{MyClassInterface.class}, handler);
+    static CalculatorInterface createWrappedClass() {
+        InvocationHandler handler = new LoggerInvocationHandler(new CalculatorImpl());
+        return (CalculatorInterface) Proxy.newProxyInstance(Ioc.class.getClassLoader(), new Class<?>[]{CalculatorInterface.class}, handler);
     }
 
     static class LoggerInvocationHandler implements InvocationHandler {
-        private final MyClassInterface myClass;
+        private final CalculatorInterface wrappedClass;
 
-        LoggerInvocationHandler(MyClassInterface myClass) {
-            this.myClass = myClass;
+        LoggerInvocationHandler(CalculatorInterface wrappedClass) {
+            this.wrappedClass = wrappedClass;
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             logger.info("[{}] invoking method:{}", new Date().toInstant(), method);
-            return method.invoke(myClass, args);
+            return method.invoke(wrappedClass, args);
         }
 
         @Override
         public String toString() {
-            return "LoggerInvocationHandler{" + "myClass=" + myClass + '}';
+            return "LoggerInvocationHandler{" + "wrappedClass=" + wrappedClass + '}';
         }
     }
 }
