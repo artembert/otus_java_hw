@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Date;
+import java.time.Instant;
 
 public class Ioc {
     private static final Logger logger = LoggerFactory.getLogger(Ioc.class);
@@ -31,7 +31,7 @@ public class Ioc {
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             Method implMethod = wrappedClass.getClass().getMethod(method.getName(), method.getParameterTypes());
             if (implMethod.isAnnotationPresent(Log.class)) {
-                logger.info("[{}] invoking method:{}", new Date().toInstant(), implMethod);
+                logger.info("[{}] invoking method:{}", Instant.now(), implMethod);
             }
             return implMethod.invoke(wrappedClass, args);
         }
