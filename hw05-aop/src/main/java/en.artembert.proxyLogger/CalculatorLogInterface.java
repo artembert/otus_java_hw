@@ -1,6 +1,6 @@
 package en.artembert.proxyLogger;
 
-public interface CalculatorInterface {
+public interface CalculatorLogInterface {
 
     int sum(int a, int b);
 

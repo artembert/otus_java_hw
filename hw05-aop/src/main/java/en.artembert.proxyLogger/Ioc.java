@@ -1,5 +1,6 @@
 package en.artembert.proxyLogger;
 
+import en.artembert.proxyLogger.annotation.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,27 +15,30 @@ public class Ioc {
     private Ioc() {
     }
 
-    static CalculatorInterface createWrappedClass() {
+    static CalculatorLogInterface createWrappedClass() {
         InvocationHandler handler = new LoggerInvocationHandler(new CalculatorImpl());
-        return (CalculatorInterface) Proxy.newProxyInstance(Ioc.class.getClassLoader(), new Class<?>[]{CalculatorInterface.class}, handler);
+        return (CalculatorLogInterface) Proxy.newProxyInstance(Ioc.class.getClassLoader(), new Class<?>[]{CalculatorLogInterface.class}, handler);
     }
 
     static class LoggerInvocationHandler implements InvocationHandler {
-        private final CalculatorInterface wrappedClass;
+        private final CalculatorLogInterface wrappedClass;
 
-        LoggerInvocationHandler(CalculatorInterface wrappedClass) {
+        LoggerInvocationHandler(CalculatorLogInterface wrappedClass) {
             this.wrappedClass = wrappedClass;
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            logger.info("[{}] invoking method:{}", new Date().toInstant(), method);
-            return method.invoke(wrappedClass, args);
+            Method implMethod = wrappedClass.getClass().getMethod(method.getName(), method.getParameterTypes());
+            if (implMethod.isAnnotationPresent(Log.class)) {
+                logger.info("[{}] invoking method:{}", new Date().toInstant(), implMethod);
+            }
+            return implMethod.invoke(wrappedClass, args);
         }
 
         @Override
         public String toString() {
-            return "LoggerInvocationHandler{" + "wrappedClass=" + wrappedClass + '}';
+            return "LoggerInvocationHandler{" + "wrappedClass=" + wrappedClass + "}";
         }
     }
 }
