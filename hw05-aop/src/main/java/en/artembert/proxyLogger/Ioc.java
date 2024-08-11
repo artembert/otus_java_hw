@@ -14,12 +14,12 @@ import java.util.Map;
 public class Ioc {
     private static final Logger logger = LoggerFactory.getLogger(Ioc.class);
 
-    private Ioc() {
-    }
+    private Ioc() {}
 
-    static CalculatorLogInterface createWrappedClass() {
-        InvocationHandler handler = new LoggerInvocationHandler(new CalculatorImpl());
-        return (CalculatorLogInterface) Proxy.newProxyInstance(Ioc.class.getClassLoader(), new Class<?>[]{CalculatorLogInterface.class}, handler);
+    static CalculatorLogInterface createWrappedClass(CalculatorLogInterface implementation) {
+        InvocationHandler handler = new LoggerInvocationHandler(implementation);
+        return (CalculatorLogInterface) Proxy.newProxyInstance(
+                Ioc.class.getClassLoader(), new Class<?>[] {CalculatorLogInterface.class}, handler);
     }
 
     static class LoggerInvocationHandler implements InvocationHandler {
