@@ -38,7 +38,7 @@ public class CellStorageImpl implements CellStorage {
 
     @Override
     public WadOfCash getWadOfCash(int amount) {
-        if (amount < getTotalSum()) {
+        if (amount > getTotalSum()) {
             throw new NotEnoughBalanceException(amount);
         }
         var left = amount;
@@ -51,6 +51,7 @@ public class CellStorageImpl implements CellStorage {
             var count = Math.min(left / denomination, banknotesNumber);
             if (count > 0) {
                 wadOfCash.addBanknotes(banknote, count);
+                cell.removeBanknotes(count);
                 left -= count * denomination;
             }
         }

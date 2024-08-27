@@ -7,5 +7,7 @@ public interface WadOfCash {
 
     void removeBanknotes(Banknote banknote, int count);
 
+    int getTotalSum();
+
     Map<Banknote, Integer> getBanknotes();
 }

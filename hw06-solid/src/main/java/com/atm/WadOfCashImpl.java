@@ -24,4 +24,11 @@ public class WadOfCashImpl implements WadOfCash {
     public Map<Banknote, Integer> getBanknotes() {
         return Collections.unmodifiableMap(banknotes);
     }
+
+    @Override
+    public int getTotalSum() {
+        return banknotes.entrySet().stream()
+                .mapToInt(entry -> entry.getKey().getDenomination() * entry.getValue())
+                .sum();
+    }
 }
