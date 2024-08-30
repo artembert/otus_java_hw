@@ -1,6 +1,5 @@
 package com.atm;
 
-import com.atm.models.Atm;
 import com.atm.models.CellStorage;
 import com.atm.models.WadOfCash;
 
