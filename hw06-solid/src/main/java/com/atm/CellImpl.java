@@ -15,7 +15,7 @@ public class CellImpl implements Cell {
         var overflow = number - this.capacity - this.amount;
         if (overflow > 0) {
             this.amount = this.capacity;
-            return Math.abs(overflow);
+            return overflow;
         }
         this.amount += number;
         return 0;
