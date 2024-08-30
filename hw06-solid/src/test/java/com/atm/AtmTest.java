@@ -5,6 +5,7 @@ import com.atm.exceptions.NotEnoughBalanceException;
 import com.atm.exceptions.UnableWithdrawAmountException;
 import com.atm.exceptions.UnsupportedBanknoteException;
 import com.atm.models.Banknote;
+import com.atm.models.BanknoteCells;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,8 @@ public class AtmTest {
     @BeforeEach
     void setUp() {
         var cellStorageConfig = new HashMap<Banknote, BanknoteCells>();
-        cellStorageConfig.put(Banknote.TEN, new BanknoteCells(List.of(new CellImpl(10))));
-        cellStorageConfig.put(Banknote.ONE_HUNDRED, new BanknoteCells(List.of(new CellImpl(10))));
+        cellStorageConfig.put(Banknote.TEN, new BanknoteCellsImpl(List.of(new CellImpl(10))));
+        cellStorageConfig.put(Banknote.ONE_HUNDRED, new BanknoteCellsImpl(List.of(new CellImpl(10))));
         var cellStorage = new CellStorageImpl(cellStorageConfig);
         atm = new AtmImpl(cellStorage);
 

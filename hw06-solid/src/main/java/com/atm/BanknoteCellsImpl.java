@@ -2,18 +2,20 @@ package com.atm;
 
 import com.atm.exceptions.CellCapacityExceededException;
 import com.atm.exceptions.NotEnoughBanknotesException;
+import com.atm.models.BanknoteCells;
 import com.atm.models.Cell;
 
 import java.util.List;
 
-public class BanknoteCells {
+public class BanknoteCellsImpl implements BanknoteCells {
     private final List<Cell> cells;
 
-    BanknoteCells(List<Cell> items) {
+    BanknoteCellsImpl(List<Cell> items) {
         this.cells = items;
     }
 
-    void addBanknotes(int count) {
+    @Override
+    public void addBanknotes(int count) {
         var rest = count;
         for (var cell : this.cells) {
             var overflow = cell.addBanknotes(rest);
@@ -27,7 +29,8 @@ public class BanknoteCells {
         }
     }
 
-    void removeBanknotes(int count) {
+    @Override
+    public void removeBanknotes(int count) {
         var rest = count;
         for (var cell : cells) {
             var lack = cell.removeBanknotes(rest);
@@ -41,7 +44,8 @@ public class BanknoteCells {
         }
     }
 
-    int getBanknotesNumber() {
+    @Override
+    public int getBanknotesNumber() {
         return cells.stream()
                 .mapToInt(Cell::getBanknotesNumber)
                 .sum();

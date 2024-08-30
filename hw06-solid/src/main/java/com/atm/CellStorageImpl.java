@@ -4,6 +4,7 @@ import com.atm.exceptions.NotEnoughBalanceException;
 import com.atm.exceptions.UnableWithdrawAmountException;
 import com.atm.exceptions.UnsupportedBanknoteException;
 import com.atm.models.Banknote;
+import com.atm.models.BanknoteCells;
 import com.atm.models.CellStorage;
 import com.atm.models.WadOfCash;
 
