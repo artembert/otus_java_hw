@@ -4,7 +4,6 @@ import com.atm.exceptions.NotEnoughBalanceException;
 import com.atm.exceptions.UnableWithdrawAmountException;
 import com.atm.exceptions.UnsupportedBanknoteException;
 import com.atm.models.Banknote;
-import com.atm.models.Cell;
 import com.atm.models.CellStorage;
 import com.atm.models.WadOfCash;
 
@@ -13,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 public class CellStorageImpl implements CellStorage {
-    private final Map<Banknote, Cell> cells;
+    private final Map<Banknote, BanknoteCells> cells;
 
-    CellStorageImpl(Map<Banknote, Cell> cells) {
+    CellStorageImpl(Map<Banknote, BanknoteCells> cells) {
         this.cells = cells;
     }
 
@@ -28,22 +27,23 @@ public class CellStorageImpl implements CellStorage {
         for (Map.Entry<Banknote, Integer> entry : wadOfCash.getBanknotes().entrySet()) {
             var banknote = entry.getKey();
             var count = entry.getValue();
-            var cell = cells.get(banknote);
-            if (cell == null) {
+            var banknoteCells = cells.get(banknote);
+            if (banknoteCells == null) {
                 throw new UnsupportedBanknoteException(banknote);
             }
-            cell.addBanknotes(count);
+            banknoteCells.addBanknotes(count);
         }
     }
 
     @Override
     public WadOfCash getWadOfCash(int amount) {
-        if (amount > getTotalSum()) {
-            throw new NotEnoughBalanceException(amount);
+        var totalSum = getTotalSum();
+        if (amount > totalSum) {
+            throw new NotEnoughBalanceException(amount, totalSum);
         }
         var left = amount;
         var wadOfCash = new WadOfCashImpl();
-        for (Map.Entry<Banknote, Cell> entry : cells.entrySet()) {
+        for (Map.Entry<Banknote, BanknoteCells> entry : cells.entrySet()) {
             var banknote = entry.getKey();
             var cell = entry.getValue();
             var banknotesNumber = cell.getBanknotesNumber();
@@ -64,10 +64,10 @@ public class CellStorageImpl implements CellStorage {
     @Override
     public int getTotalSum() {
         int totalSum = 0;
-        for (Map.Entry<Banknote, Cell> entry : cells.entrySet()) {
+        for (Map.Entry<Banknote, BanknoteCells> entry : cells.entrySet()) {
             var banknote = entry.getKey();
-            var cell = entry.getValue();
-            totalSum += banknote.getDenomination() * cell.getBanknotesNumber();
+            var banknoteCells = entry.getValue();
+            totalSum += banknote.getDenomination() * banknoteCells.getBanknotesNumber();
         }
         return totalSum;
     }

@@ -1,15 +1,16 @@
 package com.atm;
 
+import com.atm.exceptions.CellCapacityExceededException;
 import com.atm.exceptions.NotEnoughBalanceException;
 import com.atm.exceptions.UnableWithdrawAmountException;
 import com.atm.exceptions.UnsupportedBanknoteException;
 import com.atm.models.Banknote;
-import com.atm.models.Cell;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,9 +21,9 @@ public class AtmTest {
 
     @BeforeEach
     void setUp() {
-        var cellStorageConfig = new HashMap<Banknote, Cell>();
-        cellStorageConfig.put(Banknote.TEN, new CellImpl());
-        cellStorageConfig.put(Banknote.ONE_HUNDRED, new CellImpl());
+        var cellStorageConfig = new HashMap<Banknote, BanknoteCells>();
+        cellStorageConfig.put(Banknote.TEN, new BanknoteCells(List.of(new CellImpl(10))));
+        cellStorageConfig.put(Banknote.ONE_HUNDRED, new BanknoteCells(List.of(new CellImpl(10))));
         var cellStorage = new CellStorageImpl(cellStorageConfig);
         atm = new AtmImpl(cellStorage);
 
@@ -77,5 +78,14 @@ public class AtmTest {
     @DisplayName("Throws exception when withdrawing amount not divisible by smallest denomination")
     void withdrawThrowsExceptionWhenAmountNotDivisibleBySmallestDenomination() {
         assertThrows(UnableWithdrawAmountException.class, () -> atm.withdraw(15));
+    }
+
+    @Test
+    @DisplayName("Throws exception if deposit excess capacity")
+    void depositExcessCapacity() {
+        var wad = new WadOfCashImpl();
+        wad.addBanknotes(Banknote.TEN, 20);
+
+        assertThrows(CellCapacityExceededException.class, () -> atm.deposit(wad));
     }
 }
