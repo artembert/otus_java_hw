@@ -5,7 +5,6 @@ import com.atm.exceptions.NotEnoughBalanceException;
 import com.atm.exceptions.UnableWithdrawAmountException;
 import com.atm.exceptions.UnsupportedBanknoteException;
 import com.atm.models.Banknote;
-import com.atm.models.BanknoteCells;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.atm.models;
+package com.atm;
 
 public interface BanknoteCells {
     void addBanknotes(int count);

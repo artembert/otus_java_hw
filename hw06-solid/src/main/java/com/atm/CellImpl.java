@@ -1,7 +1,5 @@
 package com.atm;
 
-import com.atm.models.Cell;
-
 public class CellImpl implements Cell {
     private final int capacity;
     private int amount;

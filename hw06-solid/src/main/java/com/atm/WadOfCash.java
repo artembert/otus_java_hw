@@ -1,4 +1,6 @@
-package com.atm.models;
+package com.atm;
+
+import com.atm.models.Banknote;
 
 import java.util.Map;
 

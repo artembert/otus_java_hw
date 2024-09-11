@@ -1,8 +1,5 @@
 package com.atm;
 
-import com.atm.models.CellStorage;
-import com.atm.models.WadOfCash;
-
 public class AtmImpl implements Atm {
     private final CellStorage cellStorage;
 

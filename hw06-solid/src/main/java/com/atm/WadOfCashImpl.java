@@ -1,7 +1,6 @@
 package com.atm;
 
 import com.atm.models.Banknote;
-import com.atm.models.WadOfCash;
 
 import java.util.Collections;
 import java.util.HashMap;

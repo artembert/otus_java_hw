@@ -2,8 +2,6 @@ package com.atm;
 
 import com.atm.exceptions.CellCapacityExceededException;
 import com.atm.exceptions.NotEnoughBanknotesException;
-import com.atm.models.BanknoteCells;
-import com.atm.models.Cell;
 
 import java.util.List;
 
