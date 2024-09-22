@@ -120,6 +120,11 @@ public class Message {
                 + field10 + '\'' + '}';
     }
 
+    @Override
+    public Message clone() {
+        return toBuilder().build();
+    }
+
     public static class Builder {
         private final long id;
         private String field1;
