@@ -103,7 +103,7 @@ public class Message {
     }
 
     public ObjectForMessage getField13() {
-        return field13;
+        return field13.clone();
     }
 
     @Override
@@ -261,7 +261,7 @@ public class Message {
         }
 
         public Builder field13(ObjectForMessage field13) {
-            this.field13 = field13;
+            this.field13 = field13.clone();
             return this;
         }
 
