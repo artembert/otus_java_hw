@@ -1,4 +1,4 @@
-package ru.otus.handler;
+package com.patterns.handler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.otus.listener.Listener;
-import ru.otus.model.Message;
-import ru.otus.processor.Processor;
+import com.patterns.listener.Listener;
+import com.patterns.model.Message;
+import com.patterns.processor.Processor;
 
 class ComplexProcessorTest {
 

@@ -3,6 +3,7 @@ package com.patterns.listener.homework;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import java.util.ArrayList;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import com.patterns.model.Message;
@@ -25,7 +26,7 @@ class HistoryListenerTest {
 
         var message = new Message.Builder(id)
                 .field10("field10")
-                // TODO: раскоментировать       .field13(field13)
+                .field13(field13)
                 .build();
 
         // when
