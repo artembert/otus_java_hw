@@ -22,7 +22,26 @@ class ComplexProcessorTest {
     @DisplayName("Тестируем вызовы процессоров")
     void handleProcessorsTest() {
         // given
-        var message = new Message.Builder(1L).field7("field7").build();
+        var message = new Message.Builder(1L)
+                .field1("field-to-join-1")
+                .field2("field-to-join-2")
+                .field3("field-to-join-3")
+                .field4("concat: field-to-join-1 field-to-join-2 field-to-join-3")
+                .field5("UPPER_ME!")
+                .field10("upper_me!")
+                .field11("swap_with_field12")
+                .field12("swap_with_field11")
+                .build();
+
+        var messageToProcess = new Message.Builder(1L)
+                .field1("field-to-join-1")
+                .field2("field-to-join-2")
+                .field3("field-to-join-3")
+                .field10("upper_me!")
+                .field11("swap_with_field11")
+                .field12("swap_with_field12")
+                .build();
+
 
         var processor1 = mock(Processor.class);
         when(processor1.process(message)).thenReturn(message);
@@ -30,16 +49,21 @@ class ComplexProcessorTest {
         var processor2 = mock(Processor.class);
         when(processor2.process(message)).thenReturn(message);
 
-        var processors = List.of(processor1, processor2);
+        var processor3 = mock(Processor.class);
+        when(processor3.process(message)).thenReturn(message);
+
+
+        var processors = List.of(processor1, processor2, processor3);
 
         var complexProcessor = new ComplexProcessor(processors, ex -> {});
 
         // when
-        var result = complexProcessor.handle(message);
+        var result = complexProcessor.handle(messageToProcess);
 
         // then
         verify(processor1).process(message);
         verify(processor2).process(message);
+        verify(processor3).process(message);
         assertThat(result).isEqualTo(message);
     }
 
