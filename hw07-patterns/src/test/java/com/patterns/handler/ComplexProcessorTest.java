@@ -2,6 +2,8 @@ package com.patterns.handler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -10,6 +12,10 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.patterns.processor.ProcessorConcatFields;
+import com.patterns.processor.ProcessorSwapFields;
+import com.patterns.processor.ProcessorUpperField10;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import com.patterns.listener.Listener;
@@ -43,17 +49,17 @@ class ComplexProcessorTest {
                 .build();
 
 
-        var processor1 = mock(Processor.class);
-        when(processor1.process(message)).thenReturn(message);
+        var processor1 = mock(ProcessorConcatFields.class);
+        given(processor1.process(any())).willCallRealMethod();
 
-        var processor2 = mock(Processor.class);
-        when(processor2.process(message)).thenReturn(message);
+        var processor2 = mock(ProcessorSwapFields.class);
+        given(processor2.process(any())).willCallRealMethod();
 
-        var processor3 = mock(Processor.class);
-        when(processor3.process(message)).thenReturn(message);
+        var processor3 = mock(ProcessorUpperField10.class);
+        given(processor3.process(any())).willCallRealMethod();
 
 
-        var processors = List.of(processor1, processor2, processor3);
+        List<Processor> processors = List.of(processor1, processor2, processor3);
 
         var complexProcessor = new ComplexProcessor(processors, ex -> {});
 
@@ -64,7 +70,7 @@ class ComplexProcessorTest {
         verify(processor1).process(message);
         verify(processor2).process(message);
         verify(processor3).process(message);
-        assertThat(result).isEqualTo(message);
+        assertThat(result).usingRecursiveComparison().isEqualTo(message);
     }
 
     @Test
