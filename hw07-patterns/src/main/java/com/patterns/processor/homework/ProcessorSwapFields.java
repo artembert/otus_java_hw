@@ -1,6 +1,7 @@
-package com.patterns.processor;
+package com.patterns.processor.homework;
 
 import com.patterns.model.Message;
+import com.patterns.processor.Processor;
 
 public class ProcessorSwapFields implements Processor {
 

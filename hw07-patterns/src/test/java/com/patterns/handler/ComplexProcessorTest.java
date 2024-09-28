@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.patterns.processor.ProcessorConcatFields;
-import com.patterns.processor.ProcessorSwapFields;
+import com.patterns.processor.homework.ProcessorSwapFields;
 import com.patterns.processor.ProcessorUpperField10;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
