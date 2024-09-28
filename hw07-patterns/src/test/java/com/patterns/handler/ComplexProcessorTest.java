@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.patterns.processor.ProcessorConcatFields;
-import com.patterns.processor.homework.ProcessorSwapFields;
+import com.patterns.processor.homework.SwapFieldsProcessor;
 import com.patterns.processor.ProcessorUpperField10;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,7 +52,7 @@ class ComplexProcessorTest {
         var processor1 = mock(ProcessorConcatFields.class);
         given(processor1.process(any())).willCallRealMethod();
 
-        var processor2 = mock(ProcessorSwapFields.class);
+        var processor2 = mock(SwapFieldsProcessor.class);
         given(processor2.process(any())).willCallRealMethod();
 
         var processor3 = mock(ProcessorUpperField10.class);
