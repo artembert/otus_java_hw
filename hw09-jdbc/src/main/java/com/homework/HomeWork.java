@@ -4,16 +4,16 @@ import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.core.repository.executor.DbExecutorImpl;
-import ru.otus.core.sessionmanager.TransactionRunnerJdbc;
-import ru.otus.crm.datasource.DriverManagerDataSource;
-import ru.otus.crm.model.Client;
-import ru.otus.crm.model.Manager;
-import ru.otus.crm.service.DbServiceClientImpl;
-import ru.otus.crm.service.DbServiceManagerImpl;
-import ru.otus.jdbc.mapper.DataTemplateJdbc;
-import ru.otus.jdbc.mapper.EntityClassMetaData;
-import ru.otus.jdbc.mapper.EntitySQLMetaData;
+import com.homework.core.repository.executor.DbExecutorImpl;
+import com.homework.core.sessionmanager.TransactionRunnerJdbc;
+import com.homework.crm.datasource.DriverManagerDataSource;
+import com.homework.crm.model.Client;
+import com.homework.crm.model.Manager;
+import com.homework.crm.service.DbServiceClientImpl;
+import com.homework.crm.service.DbServiceManagerImpl;
+import com.homework.jdbc.mapper.DataTemplateJdbc;
+import com.homework.jdbc.mapper.EntityClassMetaData;
+import com.homework.jdbc.mapper.EntitySQLMetaData;
 
 @SuppressWarnings({"java:S125", "java:S1481"})
 public class HomeWork {

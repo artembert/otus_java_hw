@@ -3,8 +3,8 @@ package com.homework.jdbc.mapper;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
-import ru.otus.core.repository.DataTemplate;
-import ru.otus.core.repository.executor.DbExecutor;
+import com.homework.core.repository.DataTemplate;
+import com.homework.core.repository.executor.DbExecutor;
 
 /** Сохратяет объект в базу, читает объект из базы */
 @SuppressWarnings("java:S1068")
