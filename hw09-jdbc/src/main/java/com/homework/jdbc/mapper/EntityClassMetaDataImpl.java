@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EntityClassMetaDataImpl<T> {
+public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     private final List<Field> fields = new ArrayList<>();
 
 //    String getName();
@@ -27,7 +27,7 @@ public class EntityClassMetaDataImpl<T> {
 
     public Field getIdField() {
         return this.fields.stream().filter(field -> field.isAnnotationPresent(Id.class)).findFirst().orElseThrow();
-    };
+    }
 
 //    List<Field> getAllFields();
 
