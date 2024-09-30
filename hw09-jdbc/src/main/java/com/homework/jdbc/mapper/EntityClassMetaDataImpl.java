@@ -33,7 +33,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
                 .orElseThrow(() -> new IllegalArgumentException("No @Id annotation in class"));
     }
 
-//    List<Field> getAllFields();
+    //    List<Field> getAllFields();
 
-//    List<Field> getFieldsWithoutId();
+    //    List<Field> getFieldsWithoutId();
 }

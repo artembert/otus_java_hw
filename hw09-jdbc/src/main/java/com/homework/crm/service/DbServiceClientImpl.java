@@ -1,10 +1,10 @@
 package com.homework.crm.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.homework.core.repository.DataTemplate;
 import com.homework.core.sessionmanager.TransactionRunner;
 import com.homework.crm.model.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;

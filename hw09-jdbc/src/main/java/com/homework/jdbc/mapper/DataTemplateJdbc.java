@@ -1,10 +1,11 @@
 package com.homework.jdbc.mapper;
 
+import com.homework.core.repository.DataTemplate;
+import com.homework.core.repository.executor.DbExecutor;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
-import com.homework.core.repository.DataTemplate;
-import com.homework.core.repository.executor.DbExecutor;
 
 /** Сохратяет объект в базу, читает объект из базы */
 @SuppressWarnings("java:S1068")
