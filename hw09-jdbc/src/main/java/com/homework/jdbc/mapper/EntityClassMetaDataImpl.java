@@ -1,19 +1,35 @@
 package com.homework.jdbc.mapper;
 
-import java.lang.reflect.Constructor;
+import com.homework.crm.annotation.Id;
+
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public interface EntityClassMetaDataImpl<T> {
-    String getName();
+public class EntityClassMetaDataImpl<T> {
+    private final List<Field> fields = new ArrayList<>();
 
-    Constructor<T> getConstructor();
+//    String getName();
 
-    // Поле Id должно определять по наличию аннотации Id
-    // Аннотацию @Id надо сделать самостоятельно
-    Field getIdField();
+//    Constructor<T> getConstructor();
 
-    List<Field> getAllFields();
+    public EntityClassMetaDataImpl(Class<?> clazz) {
+        if (clazz == null) {
+            throw new IllegalArgumentException("Class is null");
+        }
+        Field[] declaredFields = clazz.getDeclaredFields();
+        if (declaredFields.length == 0) {
+            throw new IllegalArgumentException("No properties in class");
+        }
+        this.fields.addAll(Arrays.asList(declaredFields));
+    }
 
-    List<Field> getFieldsWithoutId();
+    public Field getIdField() {
+        return this.fields.stream().filter(field -> field.isAnnotationPresent(Id.class)).findFirst().orElseThrow();
+    };
+
+//    List<Field> getAllFields();
+
+//    List<Field> getFieldsWithoutId();
 }

@@ -1,6 +1,9 @@
 package com.homework.crm.model;
 
+import com.homework.crm.annotation.Id;
+
 public class Client {
+    @Id()
     private Long id;
     private String name;
 

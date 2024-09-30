@@ -1,6 +1,8 @@
 package com.homework;
 
 import javax.sql.DataSource;
+
+import com.homework.jdbc.mapper.EntityClassMetaDataImpl;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +33,8 @@ public class HomeWork {
         var dbExecutor = new DbExecutorImpl();
 
         // Работа с клиентом
-        EntityClassMetaData<Client> entityClassMetaDataClient; // = new EntityClassMetaDataImpl();
+        var entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
+        log.info("Field @Id: {}", entityClassMetaDataClient.getIdField().toString());
         EntitySQLMetaData entitySQLMetaDataClient = null; // = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
         var dataTemplateClient = new DataTemplateJdbc<Client>(
                 dbExecutor, entitySQLMetaDataClient); // реализация DataTemplate, универсальная
