@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 /** "Разбирает" объект на составные части */
 public interface EntityClassMetaData<T> {
-//    String getName();
+    String getName();
 
 //    Constructor<T> getConstructor();
 

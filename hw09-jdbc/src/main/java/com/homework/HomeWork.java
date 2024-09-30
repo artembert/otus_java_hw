@@ -5,10 +5,7 @@ import com.homework.core.sessionmanager.TransactionRunnerJdbc;
 import com.homework.crm.datasource.DriverManagerDataSource;
 import com.homework.crm.model.Client;
 import com.homework.crm.model.Manager;
-import com.homework.jdbc.mapper.DataTemplateJdbc;
-import com.homework.jdbc.mapper.EntityClassMetaData;
-import com.homework.jdbc.mapper.EntityClassMetaDataImpl;
-import com.homework.jdbc.mapper.EntitySQLMetaData;
+import com.homework.jdbc.mapper.*;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +29,12 @@ public class HomeWork {
 
         // Работа с клиентом
         EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
-        log.info("[Client]: Field @Id: {}", entityClassMetaDataClient.getIdField().toString());
-        EntitySQLMetaData entitySQLMetaDataClient = null; // = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
+        log.info(
+                "[Client]: {}, {}",
+                entityClassMetaDataClient.getName(),
+                entityClassMetaDataClient.getIdField().getName()
+        );
+        EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl<>(entityClassMetaDataClient);
         var dataTemplateClient = new DataTemplateJdbc<Client>(
                 dbExecutor, entitySQLMetaDataClient); // реализация DataTemplate, универсальная
 
@@ -50,7 +51,11 @@ public class HomeWork {
         // Сделайте тоже самое с классом Manager (для него надо сделать свою таблицу)
 
         EntityClassMetaData<Manager> entityClassMetaDataManager = new EntityClassMetaDataImpl<>(Manager.class);
-        log.info("[Manager]: Field @Id: {}", entityClassMetaDataManager.getIdField().toString());
+        log.info(
+                "[Manager]: {}, {}",
+                entityClassMetaDataManager.getName(),
+                entityClassMetaDataManager.getIdField().getName()
+        );
         EntitySQLMetaData entitySQLMetaDataManager = null; // = new EntitySQLMetaDataImpl(entityClassMetaDataManager);
         var dataTemplateManager = new DataTemplateJdbc<Manager>(dbExecutor, entitySQLMetaDataManager);
 

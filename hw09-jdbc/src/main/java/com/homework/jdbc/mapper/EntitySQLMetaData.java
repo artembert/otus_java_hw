@@ -2,11 +2,11 @@ package com.homework.jdbc.mapper;
 
 /** Создает SQL - запросы */
 public interface EntitySQLMetaData {
-    String getSelectAllSql();
+    //    String getSelectAllSql();
 
     String getSelectByIdSql();
 
-    String getInsertSql();
+    //    String getInsertSql();
 
-    String getUpdateSql();
+    //    String getUpdateSql();
 }
