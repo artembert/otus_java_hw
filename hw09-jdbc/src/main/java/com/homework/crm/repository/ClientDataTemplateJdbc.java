@@ -4,7 +4,6 @@ import com.homework.core.repository.DataTemplate;
 import com.homework.core.repository.DataTemplateException;
 import com.homework.core.repository.executor.DbExecutor;
 import com.homework.crm.model.Client;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
 package com.homework.core.repository.executor;
 
 import com.homework.core.sessionmanager.DataBaseOperationException;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
