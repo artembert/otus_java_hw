@@ -8,6 +8,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     private String selectByIdQuery;
     private String insertQuery;
     private String selectAllQuery;
+    private String updateSql;
 
     public EntitySQLMetaDataImpl(EntityClassMetaData<T> entityClassMetadata) {
         this.entityClassMetaData = entityClassMetadata;
@@ -33,7 +34,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
         if (selectByIdQuery == null) {
             var template = "select * from %s where %s = ?";
             var tableName = entityClassMetaData.getName().toLowerCase();
-            var fieldId = entityClassMetaData.getIdField().getName();
+            var fieldId = entityClassMetaData.getIdField().getName().toLowerCase();
             selectByIdQuery = String.format(template, tableName, fieldId);
         }
         logger.info("selectByIdQuery: {}", selectByIdQuery);
@@ -61,6 +62,19 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
         return insertQuery;
     }
 
-    //    @Override
-    //    public String getUpdateSql();
+    @Override
+    public String getUpdateSql() {
+        if (updateSql == null) {
+            var template = "update %s set %s where %s = ?";
+            var tableName = entityClassMetaData.getName().toLowerCase();
+            var fieldId = entityClassMetaData.getIdField().getName().toLowerCase();
+            CharSequence joiner = ", ";
+            var fieldsNames = entityClassMetaData.getFieldsWithoutId().stream()
+                    .map(field -> field.getName().toLowerCase() + " = ?")
+                    .toList();
+            updateSql = String.format(template, tableName, String.join(joiner, fieldsNames), fieldId);
+        }
+        logger.info("updateSql: {}", updateSql);
+        return updateSql;
+    }
 }

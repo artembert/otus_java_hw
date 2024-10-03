@@ -66,6 +66,22 @@ public class EntitySQLMetaDataImplTest {
     }
 
     @Test
+    @DisplayName("getUpdateSql generates correct query")
+    void getUpdateSql_generatesCorrectQuery() {
+        var fields = MockTwoFieldsObject.class.getDeclaredFields();
+        Field idField = Mockito.mock(Field.class);
+        when(entityClassMetaData.getIdField()).thenReturn(idField);
+        when(entityClassMetaData.getName()).thenReturn("test_table");
+        when(entityClassMetaData.getFieldsWithoutId()).thenReturn(List.of(fields));
+        when(idField.getName()).thenReturn("uniqueid");
+
+        String expectedQuery = "update test_table set name = ?, age = ? where uniqueid = ?";
+        String actualQuery = entitySQLMetaData.getUpdateSql();
+
+        assertEquals(expectedQuery, actualQuery);
+    }
+
+    @Test
     @DisplayName("getSelectByIdSql caches query")
     void getSelectByIdSql_cachesQuery() {
         when(entityClassMetaData.getName()).thenReturn("test_table");
@@ -104,12 +120,31 @@ public class EntitySQLMetaDataImplTest {
         when(entityClassMetaData.getName()).thenReturn("test_table");
         when(entityClassMetaData.getAllFields()).thenReturn(fields);
 
-        String expectedQuery = "select age, name from test_table";
-        String actualQuery = entitySQLMetaData.getSelectAllSql();
+        String firstQuery = entitySQLMetaData.getSelectAllSql();
+        String secondQuery = entitySQLMetaData.getSelectAllSql();
 
         verify(entityClassMetaData, times(1)).getName();
         verify(entityClassMetaData, times(1)).getAllFields();
-        assertEquals(expectedQuery, actualQuery);
+        assertEquals(firstQuery, secondQuery);
+    }
+
+    @Test
+    @DisplayName("getUpdateSql caches query")
+    void getUpdateSql_cachesQuery() {
+        var fields = MockTwoFieldsObject.class.getDeclaredFields();
+        Field idField = Mockito.mock(Field.class);
+        when(entityClassMetaData.getIdField()).thenReturn(idField);
+        when(entityClassMetaData.getName()).thenReturn("test_table");
+        when(entityClassMetaData.getFieldsWithoutId()).thenReturn(List.of(fields));
+        when(idField.getName()).thenReturn("uniqueid");
+
+        String firstQuery = entitySQLMetaData.getUpdateSql();
+        String secondQuery = entitySQLMetaData.getUpdateSql();
+
+        verify(entityClassMetaData, times(1)).getName();
+        verify(entityClassMetaData, times(1)).getIdField();
+        verify(entityClassMetaData, times(1)).getFieldsWithoutId();
+        assertEquals(firstQuery, secondQuery);
     }
 
     private class MockTwoFieldsObject {

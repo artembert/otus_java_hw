@@ -71,7 +71,13 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     @Override
     public void update(Connection connection, T instance) {
-        throw new UnsupportedOperationException();
+        try {
+            var fieldsValues = disassembleObject(instance);
+            fieldsValues.add(getIdFiledValue(instance));
+            dbExecutor.executeStatement(connection, entitySQLMetaData.getUpdateSql(), fieldsValues);
+        } catch (Exception e) {
+            throw new DataTemplateException(e);
+        }
     }
 
     private T createObject(ResultSet resultSet) throws DataTemplateException {
@@ -101,5 +107,15 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
             }
         }
         return values;
+    }
+
+    private Object getIdFiledValue(T object) {
+        try {
+            var idField = entityClassMetaData.getIdField();
+            idField.setAccessible(true);
+            return idField.get(object);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

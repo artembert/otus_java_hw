@@ -48,6 +48,9 @@ public class HomeWork {
                 .getClient(clientSecond.getId())
                 .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecond.getId()));
         log.info("clientSecondSelected:{}", clientSecondSelected);
+        clientSecond.setName("dbServiceSecond UPDATED");
+        dbServiceClient.saveClient(clientSecond);
+        log.info("clientSecond Updated");
         var allClients = dbServiceClient.findAll();
         log.info("clientsFindAll:{}", allClients);
 
@@ -70,6 +73,9 @@ public class HomeWork {
                 .getManager(managerSecond.getNo())
                 .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
         log.info("managerSecondSelected:{}", managerSecondSelected);
+        managerSecond.setParam1("dbServiceSecond UPDATED");
+        dbServiceManager.saveManager(managerSecond);
+        log.info("managerSecond Updated");
         var allManagers = dbServiceManager.findAll();
         log.info("managersFindAll:{}", allManagers);
     }
