@@ -35,9 +35,8 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
             var fieldsNames = entityClassMetaData.getFieldsWithoutId().stream()
                     .map(field -> field.getName().toLowerCase())
                     .toList();
-            var fieldsValuesPlaceholders = entityClassMetaData.getFieldsWithoutId().stream()
-                    .map(field -> "?")
-                    .toList();
+            var fieldsValuesPlaceholders =
+                    fieldsNames.stream().map(field -> "?").toList();
             CharSequence joiner = ", ";
             insertQuery = String.format(
                     template,
