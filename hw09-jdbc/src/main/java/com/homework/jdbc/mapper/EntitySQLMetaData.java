@@ -4,7 +4,7 @@ package com.homework.jdbc.mapper;
  * Создает SQL - запросы
  */
 public interface EntitySQLMetaData {
-    //    String getSelectAllSql();
+    String getSelectAllSql();
 
     String getSelectByIdSql();
 

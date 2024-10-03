@@ -48,6 +48,8 @@ public class HomeWork {
                 .getClient(clientSecond.getId())
                 .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecond.getId()));
         log.info("clientSecondSelected:{}", clientSecondSelected);
+        var allClients = dbServiceClient.findAll();
+        log.info("clientsFindAll:{}", allClients);
 
         // Сделайте тоже самое с классом Manager (для него надо сделать свою таблицу)
 
@@ -68,6 +70,8 @@ public class HomeWork {
                 .getManager(managerSecond.getNo())
                 .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
         log.info("managerSecondSelected:{}", managerSecondSelected);
+        var allManagers = dbServiceManager.findAll();
+        log.info("managersFindAll:{}", allManagers);
     }
 
     private static void flywayMigrations(DataSource dataSource) {

@@ -44,7 +44,19 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     @Override
     public List<T> findAll(Connection connection) {
-        throw new UnsupportedOperationException();
+        return this.dbExecutor
+                .executeSelect(connection, entitySQLMetaData.getSelectAllSql(), List.of(), resultSet -> {
+                    var result = new ArrayList<T>();
+                    try {
+                        while (resultSet.next()) {
+                            result.add(createObject(resultSet));
+                        }
+                        return result;
+                    } catch (Exception e) {
+                        throw new DataTemplateException(e);
+                    }
+                })
+                .orElseThrow(() -> new DataTemplateException(new Exception("Error while reading all records")));
     }
 
     @Override

@@ -7,19 +7,32 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     private final EntityClassMetaData<T> entityClassMetaData;
     private String selectByIdQuery;
     private String insertQuery;
+    private String selectAllQuery;
 
     public EntitySQLMetaDataImpl(EntityClassMetaData<T> entityClassMetadata) {
         this.entityClassMetaData = entityClassMetadata;
     }
 
-    //    @Override
-    //    public String getSelectAllSql();
+    @Override
+    public String getSelectAllSql() {
+        if (selectAllQuery == null) {
+            var template = "select %s from %s";
+            var tableName = entityClassMetaData.getName().toLowerCase();
+            var fieldsNames = entityClassMetaData.getAllFields().stream()
+                    .map(field -> field.getName().toLowerCase())
+                    .toList();
+            CharSequence joiner = ", ";
+            selectAllQuery = String.format(template, String.join(joiner, fieldsNames), tableName);
+        }
+        logger.info("selectAllQuery: {}", selectAllQuery);
+        return selectAllQuery;
+    }
 
     @Override
     public String getSelectByIdSql() {
         if (selectByIdQuery == null) {
             var template = "select * from %s where %s = ?";
-            var tableName = entityClassMetaData.getName();
+            var tableName = entityClassMetaData.getName().toLowerCase();
             var fieldId = entityClassMetaData.getIdField().getName();
             selectByIdQuery = String.format(template, tableName, fieldId);
         }
@@ -31,7 +44,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     public String getInsertSql() {
         if (insertQuery == null) {
             var template = "insert into %s (%s) values (%s)";
-            var tableName = entityClassMetaData.getName();
+            var tableName = entityClassMetaData.getName().toLowerCase();
             var fieldsNames = entityClassMetaData.getFieldsWithoutId().stream()
                     .map(field -> field.getName().toLowerCase())
                     .toList();

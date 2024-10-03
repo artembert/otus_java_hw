@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,6 +51,21 @@ public class EntitySQLMetaDataImplTest {
     }
 
     @Test
+    @DisplayName("getSelectAllSql generates correct query")
+    void getSelectAllSql_generatesCorrectQuery() {
+        var fields = Arrays.stream(MockTwoFieldsObject.class.getDeclaredFields())
+                .sorted(Comparator.comparing(Field::getName))
+                .toList();
+        when(entityClassMetaData.getName()).thenReturn("test_table");
+        when(entityClassMetaData.getAllFields()).thenReturn(fields);
+
+        String expectedQuery = "select age, name from test_table";
+        String actualQuery = entitySQLMetaData.getSelectAllSql();
+
+        assertEquals(expectedQuery, actualQuery);
+    }
+
+    @Test
     @DisplayName("getSelectByIdSql caches query")
     void getSelectByIdSql_cachesQuery() {
         when(entityClassMetaData.getName()).thenReturn("test_table");
@@ -77,14 +94,31 @@ public class EntitySQLMetaDataImplTest {
         verify(entityClassMetaData, times(1)).getName();
         verify(entityClassMetaData, times(1)).getFieldsWithoutId();
     }
-}
 
-class MockTwoFieldsObject {
-    private final String name;
-    private final int age;
+    @Test
+    @DisplayName("getSelectAllSql caches query")
+    void getSelectAllSql_cachesQuery() {
+        var fields = Arrays.stream(MockTwoFieldsObject.class.getDeclaredFields())
+                .sorted(Comparator.comparing(Field::getName))
+                .toList();
+        when(entityClassMetaData.getName()).thenReturn("test_table");
+        when(entityClassMetaData.getAllFields()).thenReturn(fields);
 
-    MockTwoFieldsObject(String name, int age) {
-        this.name = name;
-        this.age = age;
+        String expectedQuery = "select age, name from test_table";
+        String actualQuery = entitySQLMetaData.getSelectAllSql();
+
+        verify(entityClassMetaData, times(1)).getName();
+        verify(entityClassMetaData, times(1)).getAllFields();
+        assertEquals(expectedQuery, actualQuery);
+    }
+
+    private class MockTwoFieldsObject {
+        private final String name;
+        private final int age;
+
+        MockTwoFieldsObject(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
     }
 }
