@@ -5,12 +5,12 @@ import com.homework.core.sessionmanager.TransactionRunnerJdbc;
 import com.homework.crm.datasource.DriverManagerDataSource;
 import com.homework.crm.model.Client;
 import com.homework.crm.model.Manager;
+import com.homework.crm.service.DbServiceClientImpl;
 import com.homework.jdbc.mapper.*;
+import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.sql.DataSource;
 
 @SuppressWarnings({"java:S125", "java:S1481"})
 public class HomeWork {
@@ -34,18 +34,19 @@ public class HomeWork {
                 entityClassMetaDataClient.getName(),
                 entityClassMetaDataClient.getIdField().getName());
         EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl<>(entityClassMetaDataClient);
-        var dataTemplateClient = new DataTemplateJdbc<Client>(
-                dbExecutor, entitySQLMetaDataClient); // реализация DataTemplate, универсальная
+        var dataTemplateClient = new DataTemplateJdbc<>(
+                dbExecutor,
+                entitySQLMetaDataClient,
+                entityClassMetaDataClient); // реализация DataTemplate, универсальная
 
         // Код дальше должен остаться
-        //        var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
-        //        dbServiceClient.saveClient(new Client("dbServiceFirst"));
-        //
-        //        var clientSecond = dbServiceClient.saveClient(new Client("dbServiceSecond"));
-        //        var clientSecondSelected = dbServiceClient
-        //                .getClient(clientSecond.getId())
-        //                .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecond.getId()));
-        //        log.info("clientSecondSelected:{}", clientSecondSelected);
+        var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
+        dbServiceClient.saveClient(new Client("dbServiceFirst"));
+        var clientSecond = dbServiceClient.saveClient(new Client("dbServiceSecond"));
+        var clientSecondSelected = dbServiceClient
+                .getClient(clientSecond.getId())
+                .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecond.getId()));
+        log.info("clientSecondSelected:{}", clientSecondSelected);
 
         // Сделайте тоже самое с классом Manager (для него надо сделать свою таблицу)
 
@@ -54,8 +55,9 @@ public class HomeWork {
                 "[Manager]: {}, {}",
                 entityClassMetaDataManager.getName(),
                 entityClassMetaDataManager.getIdField().getName());
-        EntitySQLMetaData entitySQLMetaDataManager = null; // = new EntitySQLMetaDataImpl(entityClassMetaDataManager);
-        var dataTemplateManager = new DataTemplateJdbc<Manager>(dbExecutor, entitySQLMetaDataManager);
+        EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl<>(entityClassMetaDataManager);
+        var dataTemplateManager =
+                new DataTemplateJdbc<Manager>(dbExecutor, entitySQLMetaDataManager, entityClassMetaDataManager);
 
         //        var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
         //        dbServiceManager.saveManager(new Manager("ManagerFirst"));

@@ -1,21 +1,37 @@
 package com.homework.jdbc.mapper;
 
 import com.homework.crm.annotation.Id;
-
+import com.homework.jdbc.mapper.exceptions.EntityClassInitializationException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
+    private static final Logger logger = LoggerFactory.getLogger(EntityClassMetaDataImpl.class);
     private final Class<T> clazz;
+    private final Constructor<T> constructor;
 
-    public EntityClassMetaDataImpl(Class<?> clazz) {
+    public EntityClassMetaDataImpl(Class<T> clazz) {
         if (clazz == null) {
             throw new IllegalArgumentException("Class is null");
         }
-        this.clazz = (Class<T>) clazz;
+        try {
+            this.clazz = (Class<T>) clazz;
+            this.constructor = clazz.getConstructor();
+
+        } catch (Exception e) {
+            logger.error("Entity class initialization exception");
+            throw new EntityClassInitializationException("Entity class initialization exception", e);
+        }
     }
 
-    //    Constructor<T> getConstructor();
+    @Override
+    public Constructor<T> getConstructor() {
+        return this.constructor;
+    }
 
     @Override
     public String getName() {
@@ -33,7 +49,13 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
                 .orElseThrow(() -> new IllegalArgumentException("No @Id annotation in class"));
     }
 
-    //    List<Field> getAllFields();
+    @Override
+    public List<Field> getAllFields() {
+        return List.of();
+    }
 
-    //    List<Field> getFieldsWithoutId();
+    @Override
+    public List<Field> getFieldsWithoutId() {
+        return List.of();
+    }
 }
