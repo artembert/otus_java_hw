@@ -6,6 +6,7 @@ import com.homework.core.repository.executor.DbExecutor;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,12 +48,17 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
     }
 
     @Override
-    public long insert(Connection connection, T client) {
-        throw new UnsupportedOperationException(); // TODO: To implement next
+    public long insert(Connection connection, T instance) {
+        try {
+            var fieldsValues = disassembleObject(instance);
+            return dbExecutor.executeStatement(connection, entitySQLMetaData.getInsertSql(), fieldsValues);
+        } catch (Exception e) {
+            throw new DataTemplateException(e);
+        }
     }
 
     @Override
-    public void update(Connection connection, T client) {
+    public void update(Connection connection, T instance) {
         throw new UnsupportedOperationException();
     }
 
@@ -68,5 +74,20 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
         } catch (Exception e) {
             throw new DataTemplateException(e);
         }
+    }
+
+    private List<Object> disassembleObject(T object) {
+        var fieldsWithoutId = entityClassMetaData.getFieldsWithoutId();
+        var values = new ArrayList<>();
+
+        for (Field field : fieldsWithoutId) {
+            try {
+                field.setAccessible(true);
+                values.add(field.get(object));
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return values;
     }
 }
