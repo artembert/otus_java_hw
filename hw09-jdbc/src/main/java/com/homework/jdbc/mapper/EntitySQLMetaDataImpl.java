@@ -1,5 +1,6 @@
 package com.homework.jdbc.mapper;
 
+import java.util.List;
 import org.slf4j.Logger;
 
 public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
@@ -18,12 +19,11 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     public String getSelectAllSql() {
         if (selectAllQuery == null) {
             var template = "select %s from %s";
-            var tableName = entityClassMetaData.getName().toLowerCase();
+            var tableName = getTableName();
             var fieldsNames = entityClassMetaData.getAllFields().stream()
                     .map(field -> field.getName().toLowerCase())
                     .toList();
-            CharSequence joiner = ", ";
-            selectAllQuery = String.format(template, String.join(joiner, fieldsNames), tableName);
+            selectAllQuery = String.format(template, joinFields(fieldsNames), tableName);
         }
         logger.info("selectAllQuery: {}", selectAllQuery);
         return selectAllQuery;
@@ -33,8 +33,8 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     public String getSelectByIdSql() {
         if (selectByIdQuery == null) {
             var template = "select * from %s where %s = ?";
-            var tableName = entityClassMetaData.getName().toLowerCase();
-            var fieldId = entityClassMetaData.getIdField().getName().toLowerCase();
+            var tableName = getTableName();
+            var fieldId = getIdFieldName();
             selectByIdQuery = String.format(template, tableName, fieldId);
         }
         logger.info("selectByIdQuery: {}", selectByIdQuery);
@@ -45,18 +45,14 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     public String getInsertSql() {
         if (insertQuery == null) {
             var template = "insert into %s (%s) values (%s)";
-            var tableName = entityClassMetaData.getName().toLowerCase();
+            var tableName = getTableName();
             var fieldsNames = entityClassMetaData.getFieldsWithoutId().stream()
                     .map(field -> field.getName().toLowerCase())
                     .toList();
             var fieldsValuesPlaceholders =
                     fieldsNames.stream().map(field -> "?").toList();
-            CharSequence joiner = ", ";
-            insertQuery = String.format(
-                    template,
-                    tableName,
-                    String.join(joiner, fieldsNames),
-                    String.join(joiner, fieldsValuesPlaceholders));
+            insertQuery =
+                    String.format(template, tableName, joinFields(fieldsNames), joinFields(fieldsValuesPlaceholders));
         }
         logger.info("insertQuery: {}", insertQuery);
         return insertQuery;
@@ -66,15 +62,27 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     public String getUpdateSql() {
         if (updateSql == null) {
             var template = "update %s set %s where %s = ?";
-            var tableName = entityClassMetaData.getName().toLowerCase();
-            var fieldId = entityClassMetaData.getIdField().getName().toLowerCase();
-            CharSequence joiner = ", ";
+            var tableName = getTableName();
+            var fieldId = getIdFieldName();
             var fieldsNames = entityClassMetaData.getFieldsWithoutId().stream()
                     .map(field -> field.getName().toLowerCase() + " = ?")
                     .toList();
-            updateSql = String.format(template, tableName, String.join(joiner, fieldsNames), fieldId);
+            updateSql = String.format(template, tableName, joinFields(fieldsNames), fieldId);
         }
         logger.info("updateSql: {}", updateSql);
         return updateSql;
+    }
+
+    private String getTableName() {
+        return entityClassMetaData.getName().toLowerCase();
+    }
+
+    private String getIdFieldName() {
+        return entityClassMetaData.getIdField().getName().toLowerCase();
+    }
+
+    private String joinFields(List<String> fields) {
+        CharSequence joiner = ", ";
+        return String.join(joiner, fields);
     }
 }
