@@ -6,6 +6,7 @@ import com.homework.crm.datasource.DriverManagerDataSource;
 import com.homework.crm.model.Client;
 import com.homework.crm.model.Manager;
 import com.homework.crm.service.DbServiceClientImpl;
+import com.homework.crm.service.DbServiceManagerImpl;
 import com.homework.jdbc.mapper.*;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
@@ -57,16 +58,16 @@ public class HomeWork {
                 entityClassMetaDataManager.getIdField().getName());
         EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl<>(entityClassMetaDataManager);
         var dataTemplateManager =
-                new DataTemplateJdbc<Manager>(dbExecutor, entitySQLMetaDataManager, entityClassMetaDataManager);
+                new DataTemplateJdbc<>(dbExecutor, entitySQLMetaDataManager, entityClassMetaDataManager);
 
-        //        var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
-        //        dbServiceManager.saveManager(new Manager("ManagerFirst"));
-        //
-        //        var managerSecond = dbServiceManager.saveManager(new Manager("ManagerSecond"));
-        //        var managerSecondSelected = dbServiceManager
-        //                .getManager(managerSecond.getNo())
-        //                .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
-        //        log.info("managerSecondSelected:{}", managerSecondSelected);
+        var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
+        dbServiceManager.saveManager(new Manager("ManagerFirst"));
+
+        var managerSecond = dbServiceManager.saveManager(new Manager("ManagerSecond"));
+        var managerSecondSelected = dbServiceManager
+                .getManager(managerSecond.getNo())
+                .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
+        log.info("managerSecondSelected:{}", managerSecondSelected);
     }
 
     private static void flywayMigrations(DataSource dataSource) {
