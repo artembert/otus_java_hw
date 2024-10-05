@@ -1,7 +1,7 @@
 package com.patterns.listener.homework;
 
-import java.util.Optional;
 import com.patterns.model.Message;
+import java.util.Optional;
 
 public interface HistoryReader {
 

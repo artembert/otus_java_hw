@@ -2,7 +2,6 @@ package com.atm;
 
 import com.atm.exceptions.CellCapacityExceededException;
 import com.atm.exceptions.NotEnoughBanknotesException;
-
 import java.util.List;
 
 public class BanknoteCellsImpl implements BanknoteCells {
@@ -44,8 +43,6 @@ public class BanknoteCellsImpl implements BanknoteCells {
 
     @Override
     public int getBanknotesNumber() {
-        return cells.stream()
-                .mapToInt(Cell::getBanknotesNumber)
-                .sum();
+        return cells.stream().mapToInt(Cell::getBanknotesNumber).sum();
     }
 }

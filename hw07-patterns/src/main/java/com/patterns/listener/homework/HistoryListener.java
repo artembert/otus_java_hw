@@ -1,10 +1,10 @@
 package com.patterns.listener.homework;
 
+import com.patterns.listener.Listener;
+import com.patterns.model.Message;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import com.patterns.listener.Listener;
-import com.patterns.model.Message;
 
 public class HistoryListener implements Listener, HistoryReader {
     private final Map<Long, Message> history = new HashMap<>();

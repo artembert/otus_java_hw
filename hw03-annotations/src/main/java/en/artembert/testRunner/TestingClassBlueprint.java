@@ -3,7 +3,6 @@ package en.artembert.testRunner;
 import en.artembert.testRunner.annotations.After;
 import en.artembert.testRunner.annotations.Before;
 import en.artembert.testRunner.annotations.Test;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
