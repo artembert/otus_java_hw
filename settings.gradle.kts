@@ -6,6 +6,7 @@ include("hw04-garbage-collector")
 include("hw06-solid")
 include("hw07-patterns")
 include("hw09-jdbc")
+include("hw10-jpql")
 
 
 pluginManagement {
