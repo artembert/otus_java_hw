@@ -2,12 +2,11 @@ package com.patterns.listener.homework;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-import java.util.ArrayList;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import com.patterns.model.Message;
 import com.patterns.model.ObjectForMessage;
+import java.util.ArrayList;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"java:S1135", "java:S125"})
 class HistoryListenerTest {
@@ -24,15 +23,13 @@ class HistoryListenerTest {
         field13Data.add(data);
         field13.setData(field13Data);
 
-        var message = new Message.Builder(id)
-                .field10("field10")
-                .field13(field13)
-                .build();
+        var message =
+                new Message.Builder(id).field10("field10").field13(field13).build();
 
         // when
         historyListener.onUpdated(message);
-        message.getField13().setData(new ArrayList<>()); //меняем исходное сообщение
-        field13Data.clear(); //меняем исходный список
+        message.getField13().setData(new ArrayList<>()); // меняем исходное сообщение
+        field13Data.clear(); // меняем исходный список
 
         // then
         var messageFromHistory = historyListener.findMessageById(id);
@@ -48,9 +45,7 @@ class HistoryListenerTest {
 
         var id = 100L;
 
-        var message = new Message.Builder(id)
-                .field10("field10")
-                .build();
+        var message = new Message.Builder(id).field10("field10").build();
 
         // when
         historyListener.onUpdated(message);

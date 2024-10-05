@@ -1,7 +1,6 @@
 package com.atm;
 
 import com.atm.models.Banknote;
-
 import java.util.Map;
 
 public interface WadOfCash {

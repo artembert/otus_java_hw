@@ -1,11 +1,11 @@
 package com.patterns.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 import com.patterns.listener.Listener;
 import com.patterns.model.Message;
 import com.patterns.processor.Processor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class ComplexProcessor implements Handler {
 

@@ -1,14 +1,14 @@
 package com.patterns;
 
-import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.patterns.handler.ComplexProcessor;
 import com.patterns.listener.ListenerPrinterConsole;
 import com.patterns.model.Message;
 import com.patterns.processor.LoggerProcessor;
 import com.patterns.processor.ProcessorConcatFields;
 import com.patterns.processor.ProcessorUpperField10;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Demo {
     private static final Logger logger = LoggerFactory.getLogger(Demo.class);

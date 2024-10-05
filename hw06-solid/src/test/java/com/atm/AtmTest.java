@@ -1,19 +1,18 @@
 package com.atm;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.atm.exceptions.CellCapacityExceededException;
 import com.atm.exceptions.NotEnoughBalanceException;
 import com.atm.exceptions.UnableWithdrawAmountException;
 import com.atm.exceptions.UnsupportedBanknoteException;
 import com.atm.models.Banknote;
+import java.util.HashMap;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AtmTest {
 
