@@ -28,7 +28,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
             this.constructor = clazz.getConstructor();
             this.fields = Arrays.stream(clazz.getDeclaredFields())
                     .sorted(Comparator.comparing(Field::getName))
-                    .collect(Collectors.toList());
+                    .toList();
             this.fieldsWithoutId = this.fields.stream()
                     .filter(field -> !field.isAnnotationPresent(Id.class))
                     .toList();
