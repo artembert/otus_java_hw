@@ -1,11 +1,11 @@
 package en.artembert.testRunner.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import en.artembert.testRunner.annotations.After;
 import en.artembert.testRunner.annotations.Before;
 import en.artembert.testRunner.annotations.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FailedTest {
     private int globalVariable = 0;

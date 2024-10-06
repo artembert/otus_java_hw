@@ -1,11 +1,9 @@
 package en.artembert.testRunner;
 
 import en.artembert.testRunner.reflection.ReflectionHelper;
+import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Method;
-
 
 public class Runner {
     private static final Logger logger = LoggerFactory.getLogger(TestResult.class);

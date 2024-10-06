@@ -4,7 +4,6 @@ import com.atm.exceptions.NotEnoughBalanceException;
 import com.atm.exceptions.UnableWithdrawAmountException;
 import com.atm.exceptions.UnsupportedBanknoteException;
 import com.atm.models.Banknote;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +68,6 @@ public class CellStorageImpl implements CellStorage {
         }
         return totalSum;
     }
-
 
     private List<Banknote> findUnsupportedBanknotes(WadOfCash wadOfCash) {
         List<Banknote> unsupportedBanknotes = new ArrayList<>();

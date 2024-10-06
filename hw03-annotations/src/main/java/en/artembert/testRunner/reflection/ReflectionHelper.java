@@ -1,17 +1,15 @@
 package en.artembert.testRunner.reflection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReflectionHelper {
     private static final Logger logger = LoggerFactory.getLogger(ReflectionHelper.class);
 
-    private ReflectionHelper() {
-    }
+    private ReflectionHelper() {}
 
     public static Object getFieldValue(Object object, String name) {
         try {

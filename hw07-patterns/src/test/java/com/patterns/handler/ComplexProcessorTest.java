@@ -10,17 +10,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.patterns.processor.ProcessorConcatFields;
-import com.patterns.processor.homework.SwapFieldsProcessor;
-import com.patterns.processor.ProcessorUpperField10;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import com.patterns.listener.Listener;
 import com.patterns.model.Message;
 import com.patterns.processor.Processor;
+import com.patterns.processor.ProcessorConcatFields;
+import com.patterns.processor.ProcessorUpperField10;
+import com.patterns.processor.homework.SwapFieldsProcessor;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class ComplexProcessorTest {
 
@@ -48,7 +47,6 @@ class ComplexProcessorTest {
                 .field12("swap_with_field12")
                 .build();
 
-
         var processor1 = mock(ProcessorConcatFields.class);
         given(processor1.process(any())).willCallRealMethod();
 
@@ -57,7 +55,6 @@ class ComplexProcessorTest {
 
         var processor3 = mock(ProcessorUpperField10.class);
         given(processor3.process(any())).willCallRealMethod();
-
 
         List<Processor> processors = List.of(processor1, processor2, processor3);
 
